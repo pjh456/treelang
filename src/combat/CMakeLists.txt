@@ -1,3 +1,0 @@
-add_library(treelang_combat INTERFACE)
-
-target_link_libraries(treelang_combat INTERFACE treelang_core treelang_model pjh_result)

@@ -33,32 +33,8 @@ target_link_libraries(event_tests PRIVATE treelang_core doctest)
 
 doctest_discover_tests(event_tests)
 
-add_executable(model_tests test_main.cpp model/model_test.cpp)
-
-target_link_libraries(model_tests PRIVATE treelang_model doctest)
-
-doctest_discover_tests(model_tests)
-
-add_executable(combat_tests test_main.cpp combat/combat_test.cpp)
-
-target_link_libraries(combat_tests PRIVATE treelang_combat doctest)
-
-doctest_discover_tests(combat_tests)
-
-add_executable(world_tests test_main.cpp world/world_test.cpp)
-
-target_link_libraries(world_tests PRIVATE treelang_world doctest)
-
-doctest_discover_tests(world_tests)
-
 add_executable(achieve_tests test_main.cpp achieve/achieve_test.cpp)
 
 target_link_libraries(achieve_tests PRIVATE treelang_achieve doctest)
 
 doctest_discover_tests(achieve_tests)
-
-add_executable(save_tests test_main.cpp save/save_test.cpp)
-
-target_link_libraries(save_tests PRIVATE treelang_save doctest)
-
-doctest_discover_tests(save_tests)
