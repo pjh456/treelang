@@ -2,8 +2,6 @@ add_library(treelang_core INTERFACE)
 
 target_include_directories(treelang_core INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_subdirectory(achieve)
-
 add_executable(treelang
     main.cpp
 )

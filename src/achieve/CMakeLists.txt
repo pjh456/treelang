@@ -1,3 +1,0 @@
-add_library(treelang_achieve INTERFACE)
-
-target_link_libraries(treelang_achieve INTERFACE treelang_core)

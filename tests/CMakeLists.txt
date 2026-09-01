@@ -32,9 +32,3 @@ add_executable(event_tests test_main.cpp core/event_test.cpp)
 target_link_libraries(event_tests PRIVATE treelang_core doctest)
 
 doctest_discover_tests(event_tests)
-
-add_executable(achieve_tests test_main.cpp achieve/achieve_test.cpp)
-
-target_link_libraries(achieve_tests PRIVATE treelang_achieve doctest)
-
-doctest_discover_tests(achieve_tests)
