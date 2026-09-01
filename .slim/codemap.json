@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "version": "1.0.0",
+    "last_run": "2026-09-01T01:57:20.322Z",
+    "root": "D:\\treelang",
+    "include_patterns": [
+      "src/**/*.cpp",
+      "src/**/*.hpp",
+      "CMakeLists.txt",
+      "tests/**/*.cpp",
+      "README.md",
+      "Prop_Alternate.md",
+      ".gitmodules"
+    ],
+    "exclude_patterns": [
+      "build/**",
+      ".cache/**"
+    ],
+    "exceptions": []
+  },
+  "file_hashes": {
+    ".gitmodules": "16548e1f7de5b4d6b8f5d9030c2db7c2",
+    "CMakeLists.txt": "0d297c0e6ecc9bd0e0fc3e4db89447bb",
+    "Prop_Alternate.md": "b8aed9d87477ac86515d317c985bf652",
+    "README.md": "6218801fab65aaa66cb631e8751c71dd",
+    "src/CMakeLists.txt": "85c91e6d586473301728b1813f76a72d",
+    "src/main.cpp": "d7d593a5fd320f05b4588d68ba2f0a94",
+    "src/nothing.cpp": "d41d8cd98f00b204e9800998ecf8427e",
+    "tests/CMakeLists.txt": "3d26329a8258b7a813c54f62e7ab45b4",
+    "tests/test_smoke.cpp": "15bd9b79dd1eecb0806bfd0666626194"
+  },
+  "folder_hashes": {
+    ".": "f7e34bbfc332d7a283ca8e149973377e",
+    "src": "c76b38320c4318b5b1275be6fb992b75",
+    "tests": "58566453f43d01d38226f0c6c1abe5ee"
+  }
+}
