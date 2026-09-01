@@ -1,8 +1,6 @@
 .cache/
 .vscode/
 .idea/
-.gitignore
-.gitignore
 AGENTS.md
 .idea/
 .slim/
