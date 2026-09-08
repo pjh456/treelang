@@ -51,3 +51,9 @@ add_executable(entity_tests test_main.cpp entity/entity_event_test.cpp entity/en
 target_link_libraries(entity_tests PRIVATE treelang_core doctest)
 
 doctest_discover_tests(entity_tests)
+
+add_executable(combat_spell_tests test_main.cpp combat/spell_test.cpp)
+
+target_link_libraries(combat_spell_tests PRIVATE treelang_core doctest)
+
+doctest_discover_tests(combat_spell_tests)

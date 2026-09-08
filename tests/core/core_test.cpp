@@ -6,8 +6,12 @@
 
 using treelang::Element;
 using treelang::ElementAttr;
+using treelang::ElementMask;
 using treelang::Rng;
 using treelang::RoomType;
+using treelang::all_elements;
+using treelang::elements_of;
+using treelang::mask_of;
 
 TEST_CASE("core: element id/name round-trip")
 {
@@ -41,6 +45,41 @@ TEST_CASE("core: room type / constants / element attr")
 
     CHECK(static_cast<int>(RoomType::Start) == 0);
     CHECK(static_cast<int>(RoomType::Story) == 4);
+}
+
+TEST_CASE("core: element mask bit ops")
+{
+    CHECK(mask_of(Element::Fire) == ElementMask::Fire);
+    CHECK(mask_of(Element::Light) == ElementMask::Light);
+
+    const auto both = ElementMask::Fire | ElementMask::Water;
+    CHECK((both & ElementMask::Fire) != ElementMask::None);
+    CHECK((both & ElementMask::Light) == ElementMask::None);
+    CHECK((both | ElementMask::Wind)
+          == (ElementMask::Fire | ElementMask::Water | ElementMask::Wind));
+
+    CHECK(~ElementMask::Fire
+          == (ElementMask::Water | ElementMask::Wind | ElementMask::Earth | ElementMask::Light));
+    CHECK(~ElementMask::None == all_elements());
+    CHECK(~all_elements() == ElementMask::None);
+
+    ElementMask m = ElementMask::None;
+    m |= mask_of(Element::Earth);
+    m &= ElementMask::Earth;
+    CHECK(m == ElementMask::Earth);
+    m &= ~ElementMask::Earth;
+    CHECK(m == ElementMask::None);
+}
+
+TEST_CASE("core: elements_of expands in enum order")
+{
+    const auto els = elements_of(ElementMask::Light | ElementMask::Fire);
+    CHECK(els.size() == 2);
+    CHECK(els[0] == Element::Fire);
+    CHECK(els[1] == Element::Light);
+
+    CHECK(elements_of(ElementMask::None).empty());
+    CHECK(elements_of(all_elements()).size() == 5);
 }
 
 TEST_CASE("core: rng is deterministic and in-range")
