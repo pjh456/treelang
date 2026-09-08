@@ -8,13 +8,21 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <pjh_result.hpp>
 
 #include "direction.hpp"
 #include "element.hpp"
+#include "error.hpp"
 #include "point.hpp"
 
 namespace treelang
 {
+    template <typename T>
+    using Result = pjh::result::Result<T, Error>;
+
+    template <typename T>
+    using Option = pjh::result::Option<T>;
+
     /** 地图规格：5×5 网格 */
     inline constexpr std::size_t k_map_size = 5;
 

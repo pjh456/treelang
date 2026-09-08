@@ -1,13 +1,13 @@
 #ifndef INCLUDE_TREELANG_ENTITY_EVENT_HPP
 #define INCLUDE_TREELANG_ENTITY_EVENT_HPP
 
-#include <optional>
 #include <string>
 #include <string_view>
 
 #include "core/element.hpp"
 #include "core/event.hpp"
 #include "core/marco.hpp"
+#include "core/types.hpp"
 
 namespace treelang
 {
@@ -24,12 +24,12 @@ namespace treelang
      * @brief 实体某属性的 cur 值发生变化（hp/atk/def），由状态监听器自动发布。
      */
     DEFINE_EVENT_START(EntityStatusChanged, EntityEvent)
-    public:
-        std::string entity_id;
-        std::string_view attribute;
-        int old_cur = 0;
-        int new_cur = 0;
-        int tot = 0;
+public:
+    std::string entity_id;
+    std::string_view attribute;
+    int old_cur = 0;
+    int new_cur = 0;
+    int tot = 0;
     DEFINE_EVENT_END(EntityStatusChanged)
 
     /**
@@ -37,12 +37,12 @@ namespace treelang
      * @brief 实体某属性的 tot（上限）发生变化，如升级成长。
      */
     DEFINE_EVENT_START(EntityStatusMaxChanged, EntityEvent)
-    public:
-        std::string entity_id;
-        std::string_view attribute;
-        int old_tot = 0;
-        int new_tot = 0;
-        int cur = 0;
+public:
+    std::string entity_id;
+    std::string_view attribute;
+    int old_tot = 0;
+    int new_tot = 0;
+    int cur = 0;
     DEFINE_EVENT_END(EntityStatusMaxChanged)
 
     /**
@@ -50,8 +50,8 @@ namespace treelang
      * @brief 实体 hp 降为 0，由状态监听器自动发布。
      */
     DEFINE_EVENT_START(EntityDied, EntityEvent)
-    public:
-        std::string entity_id;
+public:
+    std::string entity_id;
     DEFINE_EVENT_END(EntityDied)
 
     /**
@@ -59,14 +59,14 @@ namespace treelang
      * @brief 实体受到伤害（原因层：来源、总量、护盾吸收、血量损失）。
      */
     DEFINE_EVENT_START(EntityDamaged, EntityEvent)
-    public:
-        std::string source;
-        std::string target;
-        int amount = 0;
-        int shield_absorbed = 0;
-        int hp_lost = 0;
-        std::optional<Element> element;
-        bool black_flash = false;
+public:
+    std::string source;
+    std::string target;
+    int amount = 0;
+    int shield_absorbed = 0;
+    int hp_lost = 0;
+    Option<Element> element = Option<Element>::None();
+    bool black_flash = false;
     DEFINE_EVENT_END(EntityDamaged)
 
     /**
@@ -74,9 +74,9 @@ namespace treelang
      * @brief 实体恢复 hp（原因层）。
      */
     DEFINE_EVENT_START(EntityHealed, EntityEvent)
-    public:
-        std::string target;
-        int amount = 0;
+public:
+    std::string target;
+    int amount = 0;
     DEFINE_EVENT_END(EntityHealed)
 
     /**
@@ -84,9 +84,9 @@ namespace treelang
      * @brief 实体获得护盾（原因层）。
      */
     DEFINE_EVENT_START(EntityShieldGained, EntityEvent)
-    public:
-        std::string target;
-        int amount = 0;
+public:
+    std::string target;
+    int amount = 0;
     DEFINE_EVENT_END(EntityShieldGained)
 
 }

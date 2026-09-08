@@ -23,12 +23,12 @@ TEST_CASE("core: element id/name round-trip")
     CHECK(treelang::element_name(Element::Earth) == "土");
     CHECK(treelang::element_name(Element::Light) == "光");
 
-    CHECK(treelang::element_from_id("fire") == Element::Fire);
-    CHECK(treelang::element_from_id("water") == Element::Water);
-    CHECK(treelang::element_from_id("wind") == Element::Wind);
-    CHECK(treelang::element_from_id("earth") == Element::Earth);
-    CHECK(treelang::element_from_id("light") == Element::Light);
-    CHECK(!treelang::element_from_id("metal").has_value());
+    CHECK(treelang::element_from_id("fire").contains(Element::Fire));
+    CHECK(treelang::element_from_id("water").contains(Element::Water));
+    CHECK(treelang::element_from_id("wind").contains(Element::Wind));
+    CHECK(treelang::element_from_id("earth").contains(Element::Earth));
+    CHECK(treelang::element_from_id("light").contains(Element::Light));
+    CHECK(treelang::element_from_id("metal").is_none());
 }
 
 TEST_CASE("core: room type / constants / element attr")

@@ -10,6 +10,7 @@
 #include "entity/event.hpp"
 
 using treelang::Element;
+using treelang::Option;
 using treelang::Event;
 using treelang::EventBus;
 using treelang::Handler;
@@ -91,7 +92,7 @@ TEST_CASE("entity_event: reason event does not leak into state listeners")
     ev->amount = 5;
     ev->shield_absorbed = 2;
     ev->hp_lost = 3;
-    ev->element = Element::Fire;
+    ev->element = Option<Element>::Some(Element::Fire);
     ev->black_flash = true;
     bus.publish(ev);
 
@@ -101,7 +102,7 @@ TEST_CASE("entity_event: reason event does not leak into state listeners")
     CHECK(dmg->amount == 5);
     CHECK(dmg->shield_absorbed == 2);
     CHECK(dmg->hp_lost == 3);
-    CHECK(dmg->element == Element::Fire);
+    CHECK(dmg->element.contains(Element::Fire));
     CHECK(dmg->black_flash);
     CHECK(status_calls == 0);
 }

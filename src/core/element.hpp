@@ -7,7 +7,7 @@
 #define INCLUDE_TREELANG_CORE_ELEMENT_HPP
 
 #include <cstdint>
-#include <optional>
+#include <pjh_result/option.hpp>
 #include <string_view>
 
 namespace treelang
@@ -20,11 +20,11 @@ namespace treelang
      */
     enum class Element : std::uint8_t
     {
-        Fire,   /**< 火 */
-        Water,  /**< 水 */
-        Wind,   /**< 风 */
-        Earth,  /**< 土 */
-        Light,  /**< 光 */
+        Fire,  /**< 火 */
+        Water, /**< 水 */
+        Wind,  /**< 风 */
+        Earth, /**< 土 */
+        Light, /**< 光 */
     };
 
     /**
@@ -39,11 +39,16 @@ namespace treelang
     {
         switch (e)
         {
-            case Element::Fire: return "fire";
-            case Element::Water: return "water";
-            case Element::Wind: return "wind";
-            case Element::Earth: return "earth";
-            case Element::Light: return "light";
+        case Element::Fire:
+            return "fire";
+        case Element::Water:
+            return "water";
+        case Element::Wind:
+            return "wind";
+        case Element::Earth:
+            return "earth";
+        case Element::Light:
+            return "light";
         }
         return {};
     }
@@ -51,16 +56,22 @@ namespace treelang
     /**
      * @brief 从稳定标识解析元素。
      * @param id ASCII 标识，如 "water"。
-     * @return 解析成功返回对应元素；未知标识返回 nullopt。
+     * @return 解析成功返回对应元素；未知标识返回 None。
      */
-    constexpr std::optional<Element> element_from_id(std::string_view id)
+    inline pjh::result::Option<Element> element_from_id(std::string_view id)
     {
-        if (id == "fire") return Element::Fire;
-        if (id == "water") return Element::Water;
-        if (id == "wind") return Element::Wind;
-        if (id == "earth") return Element::Earth;
-        if (id == "light") return Element::Light;
-        return std::nullopt;
+        using Opt = pjh::result::Option<Element>;
+        if (id == "fire")
+            return Opt::Some(Element::Fire);
+        if (id == "water")
+            return Opt::Some(Element::Water);
+        if (id == "wind")
+            return Opt::Some(Element::Wind);
+        if (id == "earth")
+            return Opt::Some(Element::Earth);
+        if (id == "light")
+            return Opt::Some(Element::Light);
+        return Opt::None();
     }
 
     /**
@@ -72,11 +83,16 @@ namespace treelang
     {
         switch (e)
         {
-            case Element::Fire: return "火";
-            case Element::Water: return "水";
-            case Element::Wind: return "风";
-            case Element::Earth: return "土";
-            case Element::Light: return "光";
+        case Element::Fire:
+            return "火";
+        case Element::Water:
+            return "水";
+        case Element::Wind:
+            return "风";
+        case Element::Earth:
+            return "土";
+        case Element::Light:
+            return "光";
         }
         return {};
     }

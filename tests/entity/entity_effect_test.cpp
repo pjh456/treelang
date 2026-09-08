@@ -1,7 +1,6 @@
 #include <doctest/doctest.h>
 
 #include <cstdint>
-#include <optional>
 #include <string>
 #include <utility>
 #include <vector>
@@ -14,6 +13,7 @@
 #include "entity/status.hpp"
 
 using treelang::Element;
+using treelang::Option;
 using treelang::EntityDamagedEvent;
 using treelang::EntityDiedEvent;
 using treelang::EntityHealedEvent;
@@ -77,7 +77,7 @@ TEST_CASE("effect: take_damage publishes reason event before state event")
         }));
 
     auto e = make_entity("fx_damage", 20, bus);
-    CHECK(e.take_damage("goblin_1", 8, 3, 5, Element::Fire, true) == 5);
+    CHECK(e.take_damage("goblin_1", 8, 3, 5, Option<Element>::Some(Element::Fire), true) == 5);
 
     REQUIRE(dmg.size() == 1);
     CHECK(dmg.back().source == "goblin_1");
@@ -93,7 +93,7 @@ TEST_CASE("effect: take_damage publishes reason event before state event")
     CHECK(dmg.back().seq < seen.back().seq);  // 原因层先于状态层
     CHECK(e.get_status().get_hp().get_cur() == 15);
 
-    CHECK(e.take_damage("goblin_2", 4, 4, 0, std::nullopt, false) == 0);  // 全额被盾吸收
+    CHECK(e.take_damage("goblin_2", 4, 4, 0, Option<Element>::None(), false) == 0);  // 全额被盾吸收
     CHECK(dmg.size() == 2);
     CHECK(dmg.back().hp_lost == 0);
     CHECK(seen.size() == 1);  // 无状态变化
@@ -122,7 +122,7 @@ TEST_CASE("effect: heal clamps at max hp, silent when full")
     CHECK(seen.empty());
     CHECK(e.get_status().get_hp().get_cur() == 20);
 
-    CHECK(e.take_damage("x", 5, 0, 5, std::nullopt, false) == 5);  // 20 -> 15
+    CHECK(e.take_damage("x", 5, 0, 5, Option<Element>::None(), false) == 5);  // 20 -> 15
     CHECK(e.heal(9) == 5);  // 实际只恢复 5
     REQUIRE(healed.size() == 1);
     CHECK(healed.back() == 5);
@@ -156,7 +156,7 @@ TEST_CASE("effect: lethal take_damage orders reason, changed, died")
         [&](HandlerContext<EntityDiedEvent> &ctx) { died_seq.push_back(ctx.event.get_sequence()); }));
 
     auto e = make_entity("fx_lethal", 3, bus);
-    CHECK(e.take_damage("boss", 5, 0, 5, Element::Water, false) == 3);  // 3 -> 0，超杀只记 3
+    CHECK(e.take_damage("boss", 5, 0, 5, Option<Element>::Some(Element::Water), false) == 3);  // 3 -> 0，超杀只记 3
 
     REQUIRE(dmg.size() == 1);
     REQUIRE(seen.size() == 1);
@@ -189,11 +189,11 @@ TEST_CASE("effect: thorns-style logic binds to damage event (33% reflect)")
         {
             const int back = ctx.event.amount * 33 / 100;
             if (back > 0)
-                attacker.take_damage(beetle.get_id(), back, 0, back, std::nullopt, false);
+                attacker.take_damage(beetle.get_id(), back, 0, back, Option<Element>::None(), false);
         },
         HandlerPriority::Last));
 
-    beetle.take_damage(attacker.get_id(), 12, 0, 12, std::nullopt, false);
+    beetle.take_damage(attacker.get_id(), 12, 0, 12, Option<Element>::None(), false);
 
     REQUIRE(atk_hp_lost.size() == 1);
     CHECK(atk_hp_lost.back() == 3);  // floor(12 * 33%)
@@ -202,7 +202,7 @@ TEST_CASE("effect: thorns-style logic binds to damage event (33% reflect)")
 
     // 句柄退订后，反弹不再发生
     thorns.reset();
-    beetle.take_damage(attacker.get_id(), 10, 0, 10, std::nullopt, false);
+    beetle.take_damage(attacker.get_id(), 10, 0, 10, Option<Element>::None(), false);
     CHECK(atk_hp_lost.size() == 1);
     CHECK(attacker.get_status().get_hp().get_cur() == 27);
 }

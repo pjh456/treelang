@@ -2,13 +2,13 @@
 #define INCLUDE_TREELANG_ENTITY_BASE_HPP
 
 #include <memory>
-#include <optional>
 #include <string>
 #include <utility>
 
 #include "core/element.hpp"
 #include "core/event_bus.hpp"
 #include "core/marco.hpp"
+#include "core/types.hpp"
 #include "entity/event.hpp"
 #include "entity/status.hpp"
 
@@ -51,7 +51,7 @@ namespace treelang
                 int amount,
                 int shield_absorbed,
                 int hp_lost,
-                std::optional<Element> element,
+                Option<Element> element,
                 bool black_flash)
             {
                 auto ev = std::make_shared<EntityDamagedEvent>();
